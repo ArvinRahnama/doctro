@@ -164,7 +164,8 @@
                                             <label for="app_id" class="col-form-label"> {{__('Currency')}}</label>
                                             <select name="currency_code" class="select2">
                                                 @foreach ($currencies as $currency)
-                                                <option value="{{$currency->id}}" {{ $currency->id == $setting->currency_id ? 'selected' : ''}}>{{$currency->country}}&nbsp;&nbsp;({{$currency->currency}})&nbsp;&nbsp;({{$currency->code}})
+                                                <option value="{{$currency->id}}" {{ $currency->id == $setting->currency_code ? 'selected' : ''}}>
+                                                    {{$currency->country}}&nbsp;&nbsp;({{$currency->currency}})&nbsp;&nbsp;({{$currency->code}})
                                                 </option>
                                                 @endforeach
                                             </select>
@@ -348,7 +349,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label class="col-form-label">{{__('Stripe public key')}}</label>
                                         <input type="text" value="{{ $setting->stripe_public_key }}" name="stripe_public_key" class="form-control @error('stripe_public_key') is-invalid @enderror">

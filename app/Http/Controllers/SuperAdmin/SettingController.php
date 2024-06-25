@@ -47,8 +47,8 @@ class SettingController extends Controller
         $data = $request->all();
         $currency = Currency::where('id',$data['currency_code'])->first();
         $data['currency_symbol'] = $currency->symbol;
-        $data['currency_id'] = $data['currency_code'];
-        $data['currency_code'] = $currency->code;
+//        $data['currency_id'] = $data['currency_code'];
+        $data['currency_code'] = $currency->id;
         // $data['currency_symbol'] = Currency::where('code',$data['currency_code'])->first()->symbol;
         if($request->hasFile('company_white_logo'))
         {
