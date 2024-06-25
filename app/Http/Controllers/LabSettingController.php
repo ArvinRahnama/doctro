@@ -88,7 +88,7 @@ class LabSettingController extends Controller
             'end_time' => 'bail|required',
             'email' => 'bail|required|email|unique:users',
             'password' => 'bail|required|min:6',
-            'image' => 'bail|mimes:jpeg,png,jpg|max:1000',
+            'image' => 'bail|max:1000',
         ],
         [
             'image.max' => 'The Image May Not Be Greater Than 1 MegaBytes.',
@@ -135,10 +135,10 @@ class LabSettingController extends Controller
             $work_time['status'] = 1;
             LabWorkHours::create($work_time);
         }
-        if ($user->verify == 1) 
-            return redirect('/pathologist_home');
-        else
-        {
+        if ($user->verify == 1) {
+	        Auth::login($user);
+	        return redirect('/pathologist_home');
+        }else {
             Session::put('pathologist_id',$user);
             return redirect('/pathologist_send_otp');
         }
@@ -265,7 +265,7 @@ class LabSettingController extends Controller
         $lab->firstHours = LabWorkHours::where('lab_id',$lab->id)->first();
         return view('lab.schedule',compact('lab'));
     }
-    
+
     public function display_lab_timeslot($id)
     {
         $work = LabWorkHours::find($id);
