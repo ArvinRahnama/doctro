@@ -59,7 +59,7 @@ CREATE TABLE `appointment` (
   KEY `fk_userId` (`user_id`),
   CONSTRAINT `fk_doctorId` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_userId` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,6 +68,7 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
+INSERT INTO `appointment` VALUES (1,'#417238',3,4,100,'COD','my_self','stayesh',23,NULL,'no','1','09354865854','2024-07-01','03:30 pm',1,NULL,'complete','heart attack','no',NULL,NULL,NULL,NULL,NULL,NULL,3,0,NULL,'2024-07-01 09:10:29','2024-07-01 09:13:21');
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,7 +149,7 @@ CREATE TABLE `category` (
   UNIQUE KEY `category_name_unique` (`name`),
   KEY `fk_treatment_id` (`treatment_id`),
   CONSTRAINT `fk_treatment_id` FOREIGN KEY (`treatment_id`) REFERENCES `treatments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,6 +158,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` VALUES (1,'cardio','668268d602605.png',2,1,'2024-07-01 08:29:10','2024-07-01 08:29:10');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -264,7 +266,7 @@ CREATE TABLE `doctor` (
   CONSTRAINT `fk_hospital_id` FOREIGN KEY (`hospital_id`) REFERENCES `hospital` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_tretment_id` FOREIGN KEY (`treatment_id`) REFERENCES `treatments` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -273,7 +275,7 @@ CREATE TABLE `doctor` (
 
 LOCK TABLES `doctor` WRITE;
 /*!40000 ALTER TABLE `doctor` DISABLE KEYS */;
-INSERT INTO `doctor` VALUES (1,NULL,NULL,NULL,NULL,2,'defaultUser.png',NULL,NULL,NULL,NULL,NULL,'15','Arvin Rahnama','2001-01-01','male','08:00 am','08:00 pm','2024-06-12 , 07:05 PM',1,1,'subscription',0,NULL,NULL,0,NULL,'2024-06-12 15:35:34','2024-06-16 08:29:32'),(2,NULL,NULL,NULL,NULL,4,'defaultUser.png',NULL,NULL,NULL,NULL,NULL,'15','Farhad Shahram','1962-03-06','male','08:00 am','08:00 pm','2024-06-16 , 12:48 PM',1,1,'subscription',0,NULL,NULL,0,NULL,'2024-06-16 09:18:28','2024-06-16 09:18:28');
+INSERT INTO `doctor` VALUES (2,NULL,NULL,NULL,NULL,4,'defaultUser.png',NULL,NULL,NULL,NULL,NULL,'15','Farhad Shahram','1962-03-06','male','08:00 am','08:00 pm','2024-06-16 , 12:48 PM',1,1,'subscription',0,NULL,NULL,0,NULL,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(4,1,1,1,3,8,'668271c132ed0.jpg','my personal bio','[{\"degree\":\"Doc\",\"college\":\"stanford\",\"year\":\"2012\"}]','[{\"certificate\":\"Phd in cardiologist\",\"certificate_year\":\"2012\"}]','100','8','30','Arvin Rahnama','2001-01-01','male','10:00 AM','08:00 PM','2024-07-01 , 12:34 PM',1,1,'subscription',1,NULL,NULL,1,'English','2024-07-01 09:04:27','2024-07-01 09:07:13');
 /*!40000 ALTER TABLE `doctor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,12 +300,13 @@ CREATE TABLE `doctor_subscription` (
   `status` tinyint(1) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `booked_appointment` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_doctor` (`doctor_id`) USING BTREE,
   KEY `fk_subscription` (`subscription_id`),
   CONSTRAINT `fk_doctor` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_subscription` FOREIGN KEY (`subscription_id`) REFERENCES `subscription` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,7 +315,7 @@ CREATE TABLE `doctor_subscription` (
 
 LOCK TABLES `doctor_subscription` WRITE;
 /*!40000 ALTER TABLE `doctor_subscription` DISABLE KEYS */;
-INSERT INTO `doctor_subscription` VALUES (1,1,5,1,'2024-06-12','2024-07-12',NULL,NULL,NULL,1,0,'2024-06-12 15:35:34','2024-06-13 12:36:32'),(2,1,2,6,'2024-06-13','2024-12-13','COD',5000,NULL,1,1,'2024-06-13 12:36:32','2024-06-14 17:44:52'),(3,2,5,1,'2024-06-16','2024-07-16',NULL,NULL,NULL,1,1,'2024-06-16 09:18:28','2024-06-16 09:18:28');
+INSERT INTO `doctor_subscription` VALUES (4,4,5,1,'2024-07-01','2024-08-01',NULL,NULL,NULL,1,0,'2024-07-01 09:04:27','2024-07-01 09:07:24',0),(5,4,1,3,'2024-07-01','2024-10-01','COD',600,NULL,1,1,'2024-07-01 09:07:24','2024-07-01 09:10:29',1);
 /*!40000 ALTER TABLE `doctor_subscription` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -333,7 +336,7 @@ CREATE TABLE `expertise` (
   PRIMARY KEY (`id`),
   KEY `fk_expertise` (`category_id`),
   CONSTRAINT `fk_expertise` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -342,6 +345,7 @@ CREATE TABLE `expertise` (
 
 LOCK TABLES `expertise` WRITE;
 /*!40000 ALTER TABLE `expertise` DISABLE KEYS */;
+INSERT INTO `expertise` VALUES (1,'cardio',1,1,'2024-07-01 08:29:34','2024-07-01 08:29:34');
 /*!40000 ALTER TABLE `expertise` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -488,7 +492,7 @@ CREATE TABLE `lab` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `lab_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -497,6 +501,7 @@ CREATE TABLE `lab` (
 
 LOCK TABLES `lab` WRITE;
 /*!40000 ALTER TABLE `lab` DISABLE KEYS */;
+INSERT INTO `lab` VALUES (1,'آزمایشگاه هراز',6,'36.4634226,52.3480605','22.3039','70.8022','defaultUser.png','08:00 am','09:00 pm',1,10,'2024-06-25 14:19:59','2024-06-25 14:19:59');
 /*!40000 ALTER TABLE `lab` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -552,7 +557,7 @@ CREATE TABLE `lab_working_hours` (
   PRIMARY KEY (`id`),
   KEY `lab_id` (`lab_id`),
   CONSTRAINT `lab_working_hours_ibfk_1` FOREIGN KEY (`lab_id`) REFERENCES `lab` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -561,6 +566,7 @@ CREATE TABLE `lab_working_hours` (
 
 LOCK TABLES `lab_working_hours` WRITE;
 /*!40000 ALTER TABLE `lab_working_hours` DISABLE KEYS */;
+INSERT INTO `lab_working_hours` VALUES (1,1,'Sunday','[{\"start_time\":\"08:00 am\",\"end_time\":\"09:00 pm\"}]',1,'2024-06-25 14:19:59','2024-06-25 14:19:59'),(2,1,'Monday','[{\"start_time\":\"08:00 am\",\"end_time\":\"09:00 pm\"}]',1,'2024-06-25 14:19:59','2024-06-25 14:19:59'),(3,1,'Tuesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"09:00 pm\"}]',1,'2024-06-25 14:19:59','2024-06-25 14:19:59'),(4,1,'Wednesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"09:00 pm\"}]',1,'2024-06-25 14:19:59','2024-06-25 14:19:59'),(5,1,'Thursday','[{\"start_time\":\"08:00 am\",\"end_time\":\"09:00 pm\"}]',1,'2024-06-25 14:19:59','2024-06-25 14:19:59'),(6,1,'Friday','[{\"start_time\":\"08:00 am\",\"end_time\":\"09:00 pm\"}]',1,'2024-06-25 14:19:59','2024-06-25 14:19:59'),(7,1,'Saturday','[{\"start_time\":\"08:00 am\",\"end_time\":\"09:00 pm\"}]',1,'2024-06-25 14:19:59','2024-06-25 14:19:59');
 /*!40000 ALTER TABLE `lab_working_hours` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -768,7 +774,7 @@ CREATE TABLE `model_has_roles` (
 
 LOCK TABLES `model_has_roles` WRITE;
 /*!40000 ALTER TABLE `model_has_roles` DISABLE KEYS */;
-INSERT INTO `model_has_roles` VALUES (1,'App\\Models\\User',1),(2,'App\\Models\\User',2),(2,'App\\Models\\User',4);
+INSERT INTO `model_has_roles` VALUES (1,'App\\Models\\User',1),(2,'App\\Models\\User',4),(5,'App\\Models\\User',5),(6,'App\\Models\\User',6),(2,'App\\Models\\User',8);
 /*!40000 ALTER TABLE `model_has_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -793,7 +799,7 @@ CREATE TABLE `notification` (
   KEY `notification_ibfk_2` (`user_id`),
   CONSTRAINT `notification_ibfk_1` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `notification_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -802,6 +808,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
+INSERT INTO `notification` VALUES (1,8,4,'create appointment','dear stayesh your appointment appointment id is #417238 is successfully 2024-07-01 at Accept from Doctro','user','2024-07-01 09:11:30','2024-07-01 09:11:30'),(2,8,4,'create appointment','dear stayesh your appointment appointment id is #417238 is successfully 2024-07-01 at Complete from Doctro','user','2024-07-01 09:13:21','2024-07-01 09:13:21');
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1162,7 +1169,7 @@ CREATE TABLE `pharmacy` (
   PRIMARY KEY (`id`),
   KEY `fk_user_pharamacy` (`user_id`),
   CONSTRAINT `fk_user_pharamacy` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1171,6 +1178,7 @@ CREATE TABLE `pharmacy` (
 
 LOCK TABLES `pharmacy` WRITE;
 /*!40000 ALTER TABLE `pharmacy` DISABLE KEYS */;
+INSERT INTO `pharmacy` VALUES (1,5,'defaultUser.png','داروخانه شبانه روزی دکتر اسدی','asadiph@gmail.com','9113265412','36.4693133,52.3468605','22.3039','70.8022','08:00 am','08:00 pm',10,NULL,0,NULL,1,NULL,'2024-06-25 14:00:46','2024-06-25 14:00:46');
 /*!40000 ALTER TABLE `pharmacy` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1226,7 +1234,7 @@ CREATE TABLE `pharmacy_working_hour` (
   PRIMARY KEY (`id`),
   KEY `fk_pharamcy_working` (`pharmacy_id`),
   CONSTRAINT `fk_pharamcy_working` FOREIGN KEY (`pharmacy_id`) REFERENCES `pharmacy` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1235,6 +1243,7 @@ CREATE TABLE `pharmacy_working_hour` (
 
 LOCK TABLES `pharmacy_working_hour` WRITE;
 /*!40000 ALTER TABLE `pharmacy_working_hour` DISABLE KEYS */;
+INSERT INTO `pharmacy_working_hour` VALUES (1,1,'Sunday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-25 14:00:46','2024-06-25 14:00:46'),(2,1,'Monday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-25 14:00:46','2024-06-25 14:00:46'),(3,1,'Tuesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-25 14:00:46','2024-06-25 14:00:46'),(4,1,'Wednesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-25 14:00:46','2024-06-25 14:00:46'),(5,1,'Thursday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-25 14:00:46','2024-06-25 14:00:46'),(6,1,'Friday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-25 14:00:46','2024-06-25 14:00:46'),(7,1,'Saturday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-25 14:00:46','2024-06-25 14:00:46');
 /*!40000 ALTER TABLE `pharmacy_working_hour` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1454,7 +1463,7 @@ CREATE TABLE `review` (
   CONSTRAINT `fk_review_appointment_id` FOREIGN KEY (`appointment_id`) REFERENCES `appointment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_review_doctor_id` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_review_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1463,6 +1472,7 @@ CREATE TABLE `review` (
 
 LOCK TABLES `review` WRITE;
 /*!40000 ALTER TABLE `review` DISABLE KEYS */;
+INSERT INTO `review` VALUES (1,'best doctor ever',5,1,4,3,'2024-07-01 09:14:31','2024-07-01 09:14:31');
 /*!40000 ALTER TABLE `review` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1612,7 +1622,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'Doctro','doctro@example.com','774455662211','60b0d05849371.png','617cf4285e7f2.png','617a83ae4a3b6.png','$','USD','#1f8ced','#28328c',1,0,0,0,0,0,' ',' ',' ',' ',' ',' ',' ',' ','Iran',10,10,'subscription','m',0,0,0,' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','[\"appointment time doctor not available.\",\"Now I am perfectly alright.\",\"Hospital not find and I missed appointment time.\",\"Personal Reasons\"]',30,'0','0','0','0',' ',' ',' ',' ',' ',' ',' ',' ',1,'English','60','https://play.google.com/store/apps?utm_source=apac_med&utm_medium=hasem&utm_content=Jul0121&utm_campaign=Evergreen&pcampaignid=MKT-EDR-apac-in-1003227-med-hasem-ap-Evergreen-Jul0121-Text_Search_BKWS-BKWS%7cONSEM_kwid_43700064490253526_creativeid_480912223122_device_c&gclid=EAIaIQobChMI0ZDVrobi8gIVRZpmAh17BwE7EAAYASAAEgJF9fD_BwE&gclsrc=aw.ds','https://play.google.com/store/apps?utm_source=apac_med&utm_medium=hasem&utm_content=Jul0121&utm_campaign=Evergreen&pcampaignid=MKT-EDR-apac-in-1003227-med-hasem-ap-Evergreen-Jul0121-Text_Search_BKWS-BKWS%7cONSEM_kwid_43700064490253526_creativeid_480912223122_device_c&gclid=EAIaIQobChMI0ZDVrobi8gIVRZpmAh17BwE7EAAYASAAEgJF9fD_BwE&gclsrc=aw.ds','<p><strong style=\"margin: 0px; padding: 0px; font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; text-transform: none;\">Lorem Ipsum</strong><span style=\"font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; text-transform: none;\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.&nbsp;</span><br></p>','<p><strong style=\"margin: 0px; padding: 0px; font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; text-transform: none;\">Lorem Ipsum</strong><span style=\"font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; text-transform: none;\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.&nbsp;</span><br></p>',' ',' ','6193922733495.svg','#',10,'2021-04-16 07:59:47','2024-06-12 22:53:47');
+INSERT INTO `settings` VALUES (1,'Doctro','doctro@example.com','01145672547','60b0d05849371.png','617cf4285e7f2.png','617a83ae4a3b6.png','$','2','#1f8ced','#28328c',1,0,0,0,0,0,' ',' ',' ',' ',' ',' ',' ',' ','Iran',10,10,'subscription','m',0,0,0,' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ','[\"appointment time doctor not available.\",\"Now I am perfectly alright.\",\"Hospital not find and I missed appointment time.\",\"Personal Reasons\"]',30,'0','0','0','0',' ',' ',' ',' ',' ',' ',' ',' ',1,'English','60','https://play.google.com/store/apps?utm_source=apac_med&utm_medium=hasem&utm_content=Jul0121&utm_campaign=Evergreen&pcampaignid=MKT-EDR-apac-in-1003227-med-hasem-ap-Evergreen-Jul0121-Text_Search_BKWS-BKWS%7cONSEM_kwid_43700064490253526_creativeid_480912223122_device_c&gclid=EAIaIQobChMI0ZDVrobi8gIVRZpmAh17BwE7EAAYASAAEgJF9fD_BwE&gclsrc=aw.ds','https://play.google.com/store/apps?utm_source=apac_med&utm_medium=hasem&utm_content=Jul0121&utm_campaign=Evergreen&pcampaignid=MKT-EDR-apac-in-1003227-med-hasem-ap-Evergreen-Jul0121-Text_Search_BKWS-BKWS%7cONSEM_kwid_43700064490253526_creativeid_480912223122_device_c&gclid=EAIaIQobChMI0ZDVrobi8gIVRZpmAh17BwE7EAAYASAAEgJF9fD_BwE&gclsrc=aw.ds','<p><strong style=\"margin: 0px; padding: 0px; font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; text-transform: none;\">Lorem Ipsum</strong><span style=\"font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; text-transform: none;\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.&nbsp;</span><br></p>','<p><strong style=\"margin: 0px; padding: 0px; font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; text-transform: none;\">Lorem Ipsum</strong><span style=\"font-family: &quot;Open Sans&quot;, Arial, sans-serif; font-size: 14px; text-align: justify; text-transform: none;\">&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.&nbsp;</span><br></p>',' ',' ','6193922733495.svg','#',10,'2021-04-16 07:59:47','2024-06-25 17:26:20');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1754,7 +1764,7 @@ CREATE TABLE `user_address` (
   PRIMARY KEY (`id`),
   KEY `fk_userAddress_userId` (`user_id`),
   CONSTRAINT `fk_userAddress_userId` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1763,6 +1773,7 @@ CREATE TABLE `user_address` (
 
 LOCK TABLES `user_address` WRITE;
 /*!40000 ALTER TABLE `user_address` DISABLE KEYS */;
+INSERT INTO `user_address` VALUES (1,'Amol','22.3039','70.8022',3,NULL,'2024-07-01 12:04:01','2024-07-01 12:04:01');
 /*!40000 ALTER TABLE `user_address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1799,7 +1810,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `users_email_unique` (`email`),
   KEY `fk_doctor` (`doctor_id`),
   CONSTRAINT `  fk_doctor` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1808,7 +1819,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin doctro','admindoctro@gmail.com',NULL,'$2y$10$M9Fy0JzrMfE8pm4AeS7kH.Dib092aKk9CbbYBqr3vGfMbwq.zrQQG','7788994455','+91',1,NULL,NULL,NULL,NULL,'defaultUser.png',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(2,'Arvin Rahnama','arvin.rnm@gmail.com',NULL,'$2y$10$M9Fy0JzrMfE8pm4AeS7kH.Dib092aKk9CbbYBqr3vGfMbwq.zrQQG','09379860667','+98',1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,'2024-06-12 15:35:34','2024-06-12 15:35:34'),(3,'stayesh','setayesh@gmail.com',NULL,'$2y$10$6D/LiXYwxhIlr9n.DzJoKuw5YeTN.StrOPPQCIx3Qb0tEoO91IG/K','9117171636','+98',1,NULL,NULL,'2001-03-14','female','defaultUser.png',1,NULL,NULL,NULL,NULL,NULL,'2024-06-12 15:39:09','2024-06-12 15:39:09'),(4,'Farhad Shahram','farhadshahram@gmail.com',NULL,'$2y$10$yU5/sXfIIPFQWH3zGqfLVOkL6f9wausmozYoQ6CbSxwQ4fqkuNlMi','02188829552','+98',1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,'2024-06-16 09:18:28','2024-06-16 09:18:28');
+INSERT INTO `users` VALUES (1,'admin doctro','admindoctro@gmail.com',NULL,'$2y$10$M9Fy0JzrMfE8pm4AeS7kH.Dib092aKk9CbbYBqr3vGfMbwq.zrQQG','7788994455','+91',1,NULL,NULL,NULL,NULL,'defaultUser.png',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),(3,'stayesh','setayesh@gmail.com',NULL,'$2y$10$6D/LiXYwxhIlr9n.DzJoKuw5YeTN.StrOPPQCIx3Qb0tEoO91IG/K','9117171636','+98',1,NULL,NULL,'2001-03-14','female','defaultUser.png',1,NULL,NULL,NULL,NULL,NULL,'2024-06-12 15:39:09','2024-06-12 15:39:09'),(4,'Farhad Shahram','farhadshahram@gmail.com',NULL,'$2y$10$yU5/sXfIIPFQWH3zGqfLVOkL6f9wausmozYoQ6CbSxwQ4fqkuNlMi','02188829552','+98',1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(5,'داروخانه شبانه روزی دکتر اسدی','asadiph@gmail.com',NULL,'$2y$10$jP2osnhXzptpU8pQDftVOulubDsJCdOjDZtyUrGJAt9uV8lFgQK12','9113265412','+98',1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2024-06-25 14:00:46','2024-06-25 14:00:46'),(6,'مهسا کمانگر','harazpa@gmail.com',NULL,'$2y$10$tCDaYCU8p/5u4zvMn8jese55bzOkqpDwn7r0GYtP5LMEhOk5Rw4pe','09445278615','+98',1,NULL,NULL,NULL,NULL,'defaultUser.png',NULL,NULL,NULL,NULL,NULL,NULL,'2024-06-25 14:19:59','2024-06-25 14:19:59'),(8,'Arvin Rahnama','arvin.rnm@gmail.com',NULL,'$2y$10$HRGuXtXFHAqzfFsECwWECu26tPh4g0agcspeuzMEYoCwuKKGb2LWm','9379860667','+98',1,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,NULL,'2024-07-01 09:04:27','2024-07-01 09:04:27');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1863,7 +1874,7 @@ CREATE TABLE `working_hour` (
   PRIMARY KEY (`id`),
   KEY `fk_doctor_id` (`doctor_id`),
   CONSTRAINT `fk_doctor_id` FOREIGN KEY (`doctor_id`) REFERENCES `doctor` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1872,7 +1883,7 @@ CREATE TABLE `working_hour` (
 
 LOCK TABLES `working_hour` WRITE;
 /*!40000 ALTER TABLE `working_hour` DISABLE KEYS */;
-INSERT INTO `working_hour` VALUES (1,1,'Sunday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-12 15:35:34','2024-06-12 15:35:34'),(2,1,'Monday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-12 15:35:34','2024-06-12 15:35:34'),(3,1,'Tuesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-12 15:35:34','2024-06-12 15:35:34'),(4,1,'Wednesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-12 15:35:34','2024-06-12 15:35:34'),(5,1,'Thursday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-12 15:35:34','2024-06-12 15:35:34'),(6,1,'Friday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-12 15:35:34','2024-06-12 15:35:34'),(7,1,'Saturday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-12 15:35:34','2024-06-12 15:35:34'),(8,2,'Sunday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(9,2,'Monday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(10,2,'Tuesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(11,2,'Wednesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(12,2,'Thursday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(13,2,'Friday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(14,2,'Saturday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28');
+INSERT INTO `working_hour` VALUES (8,2,'Sunday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(9,2,'Monday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(10,2,'Tuesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(11,2,'Wednesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(12,2,'Thursday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(13,2,'Friday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(14,2,'Saturday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-06-16 09:18:28','2024-06-16 09:18:28'),(15,4,'Sunday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-07-01 09:04:27','2024-07-01 09:04:27'),(16,4,'Monday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-07-01 09:04:27','2024-07-01 09:04:27'),(17,4,'Tuesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-07-01 09:04:27','2024-07-01 09:04:27'),(18,4,'Wednesday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-07-01 09:04:27','2024-07-01 09:04:27'),(19,4,'Thursday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-07-01 09:04:27','2024-07-01 09:04:27'),(20,4,'Friday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-07-01 09:04:27','2024-07-01 09:04:27'),(21,4,'Saturday','[{\"start_time\":\"08:00 am\",\"end_time\":\"08:00 pm\"}]',1,'2024-07-01 09:04:27','2024-07-01 09:04:27');
 /*!40000 ALTER TABLE `working_hour` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1919,4 +1930,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-16 13:39:10
+-- Dump completed on 2024-07-02 20:00:02
